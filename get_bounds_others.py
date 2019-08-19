@@ -143,7 +143,8 @@ def get_layer_bound_LP(Ws,bs,UBs,LBs,x0,eps,p,neuron_states,nlayer,pred_label,ta
                 if p == "2" or p == "1":                
                     # transformation variable at z1 only
                     if p == "2":
-                        ztij = m.addVar(vtype=grb.GRB.CONTINUOUS, name="zt_"+str(i)+"_"+str(j))
+#                         ztij = m.addVar(vtype=grb.GRB.CONTINUOUS, name="zt_"+str(i)+"_"+str(j))
+                        ztij = m.addVar(vtype=grb.GRB.CONTINUOUS, lb = -np.inf, name="zt_"+str(i)+"_"+str(j))
                     elif p == "1":
                         ztij = m.addVar(vtype=grb.GRB.CONTINUOUS, lb=0, name="zt_"+str(i)+"_"+str(j))
                     zzts.append(ztij)  
@@ -226,7 +227,8 @@ def get_layer_bound_LP(Ws,bs,UBs,LBs,x0,eps,p,neuron_states,nlayer,pred_label,ta
          #finally, add constraints for z[1] and ztrans[1], the input
         temp = []
         for i in range(len(UBs[0])):
-            tempi = m.addVar(vtype=grb.GRB.CONTINUOUS)
+#             tempi = m.addVar(vtype=grb.GRB.CONTINUOUS)
+            tempi = m.addVar(vtype=grb.GRB.CONTINUOUS, lb=-np.inf)
             temp.append(tempi)
                     
         for i in range(len(UBs[0])):
